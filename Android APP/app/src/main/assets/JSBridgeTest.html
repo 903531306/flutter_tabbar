@@ -1,0 +1,62 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title></title>
+    <script type="text/javascript">
+ 
+              //这个方式是被java调用的,file:///android_asset/JSBridgeTest.html
+             function androidCallJs(){
+             alert("java调用js弹窗");
+             }
+			 function clickMothe(){
+             window.WebViewJavascriptBridge.callHandler(
+               'jumpPage'
+               , '{type:1,url:"http://www.goldmanf.com",other1:"",other2:""}'
+               , function(responseData) {
+                    alert(responseData)
+               }
+           );
+             }
+			 //JS注册事件监听
+       function connectWebViewJavascriptBridge(callback) {
+           if (window.WebViewJavascriptBridge) {
+               callback(WebViewJavascriptBridge)
+           } else {
+               document.addEventListener(
+                   'WebViewJavascriptBridgeReady'
+                   , function() {
+                       callback(WebViewJavascriptBridge)
+                   },
+                   false
+               );
+           }
+       }
+
+        //注册回调函数，第一次连接时调用 初始化函数
+       connectWebViewJavascriptBridge(function(bridge) {
+            //初始化
+           bridge.init(function(message, responseCallback) {
+               var data = {
+                   'Javascript Responds': 'Wee!'
+               };
+               alert("jasdashjd");
+               responseCallback(data);
+           });
+
+
+           //Android调用js方法：functionInJs方法名称需要保持一致 ，并返回给Android通知
+
+           bridge.registerHandler("getWebInfo", function(data, responseCallback) {
+               alert(data);
+
+               responseCallback(data);
+           });
+       })
+
+    </script>
+</head>
+<body>
+<a href="javascript:void(0);" onclick="clickMothe()">点击触发 java 中 jumpPage 方法</a>
+<a href="http://120.79.50.70:10186/report_pdf/0324%E8%84%B1%E6%B0%B4%E4%B8%AA%E8%82%A1.pdf" target="blank" name="新浪">this PDF .</a>
+<a href="signing://futures:8080/success?contract_no=GM0101FZ1909260001A">打开商品详情</a>
+</body>
