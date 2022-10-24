@@ -970,7 +970,7 @@ class _TabBarState extends State<TabBar> {
     assert(mounted);
     if (!_controller!.indexIsChanging && widget.isScrollable) {
       // Sync the TabBar's scroll position with the TabBarView's PageView.
-      _currentIndex = _controller!.index;
+      _currentIndex = _controller!.index ;
       _scrollToControllerValue();
     }
   }
