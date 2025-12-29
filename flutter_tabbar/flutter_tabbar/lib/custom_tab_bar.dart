@@ -156,7 +156,7 @@ class _TabStyle extends AnimatedWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final TabBarTheme tabBarTheme = Theme.of(context).tabBarTheme;
     final Animation<double> animation = listenable as Animation<double>;
 
     // To enable TextStyle.lerp(style1, style2, value), both styles must have
@@ -165,11 +165,11 @@ class _TabStyle extends AnimatedWidget {
     final TextStyle defaultUnselectedStyle = (unselectedLabelStyle ??
             tabBarTheme.unselectedLabelStyle ??
             labelStyle ??
-            themeData.primaryTextTheme.bodyText1)!
+            themeData.primaryTextTheme.bodyLarge)!
         .copyWith(inherit: true);
     final TextStyle defaultStyle = (labelStyle ??
             tabBarTheme.labelStyle ??
-            themeData.primaryTextTheme.bodyText1)!
+            themeData.primaryTextTheme.bodyLarge)!
         .copyWith(inherit: true).copyWith(fontSize:defaultUnselectedStyle.fontSize);
     final TextStyle textStyle = selected!
         ? TextStyle.lerp(defaultStyle, defaultUnselectedStyle, animation.value)!
@@ -182,7 +182,7 @@ class _TabStyle extends AnimatedWidget {
 
     final Color? selectedColor = labelColor ??
         tabBarTheme.labelColor ??
-        themeData.primaryTextTheme.bodyText1!.color;
+        themeData.primaryTextTheme.bodyLarge!.color;
     final Color unselectedColor = unselectedLabelColor ??
         tabBarTheme.unselectedLabelColor ??
         selectedColor!.withAlpha(0xB2); // 70% alpha
@@ -792,7 +792,7 @@ class _TabBarState extends State<TabBar> {
 
   Decoration? get _indicator {
     if (widget.indicator != null) return widget.indicator;
-    final TabBarTheme tabBarTheme = TabBarTheme.of(context);
+    final TabBarTheme  tabBarTheme = TabBarTheme.of(context);
     if (tabBarTheme.indicator != null) return tabBarTheme.indicator;
 
     Color color = widget.indicatorColor ?? Theme.of(context).indicatorColor;
@@ -806,7 +806,7 @@ class _TabBarState extends State<TabBar> {
     //
     // The material's color might be null (if it's a transparency). In that case
     // there's no good way for us to find out what the color is so we don't.
-    if (color.value == Material.of(context)!.color?.value) color = Colors.white;
+    if (color.value == Material.of(context).color?.value) color = Colors.white;
 
     return UnderlineTabIndicator(
       insets: widget.indicatorPadding,
@@ -1494,13 +1494,13 @@ class TabPageSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color fixColor = color ?? Colors.transparent;
     final Color fixSelectedColor =
-        selectedColor ?? Theme.of(context).accentColor;
+        selectedColor ?? Theme.of(context).colorScheme.secondary;
     final ColorTween selectedColorTween =
         ColorTween(begin: fixColor, end: fixSelectedColor);
     final ColorTween previousColorTween =
         ColorTween(begin: fixSelectedColor, end: fixColor);
     final TabController tabController =
-        controller ?? DefaultTabController.of(context)!;
+        controller ?? DefaultTabController.of(context);
     assert(() {
       if (tabController == null) {
         throw FlutterError('No TabController for $runtimeType.\n'

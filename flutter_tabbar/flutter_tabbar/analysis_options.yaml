@@ -2,3 +2,12 @@ include: package:flutter_lints/flutter.yaml
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+analyzer:
+  errors:
+    unnecessary_null_assertion: ignore
+    unnecessary_null_comparison: ignore
+    curly_braces_in_flow_control_structures: ignore
+    missing_enum_constant_in_switch: ignore
+
+
+

@@ -16,7 +16,7 @@ TODO: xxxxx.
 
 ## Getting started
 
-TODO: flutter_tabbar: ^0.0.2
+TODO: flutter_tabbar: ^1.0.0
 
 ## 
 to `/example`    
